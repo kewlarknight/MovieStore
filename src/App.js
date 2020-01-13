@@ -1,5 +1,6 @@
 import React from 'react';
 // import logo from './logo.svg';
+import Movies from './components/movies';
 import './App.css';
 
 function App() {
@@ -23,11 +24,9 @@ function App() {
     <
     main className = "container" >
     <
-    h1 > Yellow World! < /h1>
-
+    Movies / >
     <
     /main>
-
   );
 }
 
