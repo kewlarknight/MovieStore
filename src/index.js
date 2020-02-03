@@ -6,17 +6,14 @@ import {
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import logService from "./services/logService";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 
+logService.init();
+
 ReactDOM.render( <
-  BrowserRouter > {
-    " "
-  } <
-  App / > {
-    " "
-  } <
-  /BrowserRouter>,
+  BrowserRouter > < App / > < /BrowserRouter>,
   document.getElementById("root")
 );
 
