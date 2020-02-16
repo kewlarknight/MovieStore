@@ -27,16 +27,32 @@ class Movies extends Component {
     this.setState({ movies, genres });
   }
 
+  // handleDelete = async movie => {
+  //   const originalMovies = this.state.movies;
+  //   const movies = originalMovies.filter(m => m._id !== movie._id);
+  //   this.setState({ movies });
+
+  //   try {
+  //     await deleteMovie(movie._id);
+  //   } catch (ex) {
+  //     if (ex.response && ex.response.status === 404) {
+  //       toast("This movie has already been deleted");
+  //     }
+  //     this.setState({ movies: originalMovies });
+  //   }
+
+  // };
+
   handleDelete = async movie => {
     const originalMovies = this.state.movies;
     const movies = originalMovies.filter(m => m._id !== movie._id);
     this.setState({ movies });
 
     try {
-      await deleteMovie(movie);
+      await deleteMovie(movie._id);
     } catch (ex) {
-      if (ex.response && ex.response.status === 404)
-        toast("This movie has already been deleted");
+      if (ex.response && ex.response.status === 404) console.log("x");
+      toast.error("This movie has already been deleted.");
 
       this.setState({ movies: originalMovies });
     }
@@ -93,8 +109,9 @@ class Movies extends Component {
   render() {
     const { length: count } = this.state.movies;
     const { currentPage, pageSize, sortColumn, searchQuery } = this.state;
+    const { user } = this.props;
 
-    if (count === 0) return <p>There are no movies in the database.</p>;
+    //  if (count === 0) return <p>There are no movies in the database.</p>;
     const { totalCount, data: movies } = this.getPagedData();
     return (
       <div className="row">
@@ -106,13 +123,15 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link
-            to="/movies/new"
-            className="btn btn-primary"
-            style={{ marginBottom: 20 }}
-          >
-            New Movie
-          </Link>
+          {user && (
+            <Link
+              to="/movies/new"
+              className="btn btn-primary"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
 
           <p>Showing {totalCount} movies in the database.</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
